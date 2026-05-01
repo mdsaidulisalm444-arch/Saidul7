@@ -1,0 +1,236 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XBDSIAMGAM - VIP PREDICTOR</title>
+
+<style>
+  :root {
+    --primary: #00ff88;
+    --secondary: #00e5ff;
+    --danger: #ff0055;
+    --bg-dark: #0a0f18;
+    --glass: rgba(15, 23, 42, 0.85);
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  /* লগইন স্ক্রিন */
+  #loginOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(10, 15, 24, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(8px);
+  }
+
+  .login-box {
+    background: var(--glass);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 240px;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .login-inner img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+
+  .login-box input {
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--primary);
+    margin: 15px 0;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .login-box button {
+    padding: 10px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 900;
+    width: 100%;
+    text-transform: uppercase;
+  }
+
+  /* ফ্লোটিং বক্স */
+  #dragBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    background: var(--glass);
+    border: 1.5px solid var(--primary);
+    border-radius: 18px;
+    padding: 15px;
+    text-align: center;
+    display: none;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    touch-action: none;
+  }
+
+  .user-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid var(--secondary);
+    margin-bottom: 5px;
+    object-fit: cover;
+  }
+
+  #toggleText {
+    font-size: 28px;
+    font-weight: 900;
+    color: #334155;
+    margin: 10px 0;
+  }
+
+  .start-btn { 
+    background: rgba(0, 255, 136, 0.1); 
+    color: var(--primary); 
+    border: 1px solid var(--primary); 
+    width: 100%; 
+    padding: 10px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-weight: bold; 
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="loginOverlay">
+  <div class="login-box">
+    <div class="login-inner">
+      <img src="https://i.ibb.co/dJtdPS4W/IMG-20260429-225800-184.jpg" alt="XBDSIAMGAM">
+      <h2 style="color:var(--primary); font-size:16px; margin:0;">XBDSIAMGAM</h2>
+      <input type="password" id="passInput" placeholder="Enter License Key">
+      <button onclick="checkPass()">ACTIVATE</button>
+      <p id="errorMsg" style="color: var(--danger); font-size: 11px; margin-top: 8px;"></p>
+    </div>
+  </div>
+</div>
+
+<div id="dragBox">
+  <div style="color:var(--primary); font-size:10px; margin-bottom:5px;">XBDSIAMGAM VIP</div>
+  <img src="https://i.ibb.co/dJtdPS4W/IMG-20260429-225800-184.jpg" class="user-img">
+  <div id="clock" style="color:#94a3b8; font-size:10px;">00:00:00</div>
+  <div id="toggleText">OFF</div>
+  <div id="counter" style="color:#8a99af; font-size:10px; margin-bottom:10px;">Rounds: 0</div>
+  <button class="start-btn" onclick="startToggle()">START HACK</button>
+</div>
+
+<script>
+let count = 0;
+let interval = null;
+
+// আপনার দেওয়া নতুন পাসওয়ার্ড এখানে সেট করা হয়েছে
+function checkPass() {
+    const pass = document.getElementById("passInput").value;
+    if (pass === "332244") { 
+        document.getElementById("loginOverlay").style.display = "none";
+        document.getElementById("dragBox").style.display = "block";
+    } else {
+        document.getElementById("errorMsg").innerText = "WRONG PASSWORD!";
+    }
+}
+
+// ড্র্যাগিং ফাংশনালিটি
+const dragBox = document.getElementById("dragBox");
+let isDragging = false, offsetX, offsetY;
+
+dragBox.addEventListener('mousedown', startDragging);
+document.addEventListener('mousemove', drag);
+document.addEventListener('mouseup', stopDragging);
+dragBox.addEventListener('touchstart', startDragging, { passive: false });
+document.addEventListener('touchmove', drag, { passive: false });
+document.addEventListener('touchend', stopDragging);
+
+function startDragging(e) {
+  isDragging = true;
+  const client = e.type.includes('touch') ? e.touches[0] : e;
+  offsetX = client.clientX - dragBox.offsetLeft;
+  offsetY = client.clientY - dragBox.offsetTop;
+}
+
+function drag(e) {
+  if (!isDragging) return;
+  const client = e.type.includes('touch') ? e.touches[0] : e;
+  dragBox.style.left = (client.clientX - offsetX) + "px";
+  dragBox.style.top = (client.clientY - offsetY) + "px";
+  dragBox.style.transform = "none"; 
+}
+
+function stopDragging() { isDragging = false; }
+
+function updateClock() {
+  document.getElementById("clock").innerText = new Date().toLocaleTimeString();
+}
+setInterval(updateClock, 1000);
+
+function generateRandom() {
+  const options = ["BIG", "SMALL"];
+  let result = options[Math.floor(Math.random() * options.length)];
+  const textDisplay = document.getElementById("toggleText");
+  textDisplay.innerText = result;
+  textDisplay.style.color = (result === "BIG") ? "#00ff88" : "#00e5ff";
+  count++;
+  document.getElementById("counter").innerText = "Rounds: " + count;
+}
+
+function startToggle() {
+  if (!interval) {
+    generateRandom();
+    interval = setInterval(generateRandom, 30000);
+  }
+}
+</script>
+</body>
+</html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  
+</body>
+
+</html>
